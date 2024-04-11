@@ -81,6 +81,56 @@ const PRODUCTS = [
   }
 ];
 
+//? FUNCIÓN HEADER 
+const printHeader = () => {
+  const headerSection = document.querySelector('#header')
+
+  //Create elements inside of it:
+  //!hamburger:
+  const label = document.createElement('label');
+  const inputHam = document.createElement('input');
+  const span1 = document.createElement('span');
+  const span2 = document.createElement('span');
+  const span3 = document.createElement('span');
+  //! logo:
+  const divLogo = document.createElement('div');
+  const  imgLogo = document.createElement('img');
+  const h1 = document.createElement( "h1" );
+
+
+  //Adding others:
+  //! hamburger:
+  label.classList.add('burger');
+  label.htmlFor = 'burger';
+  inputHam.type = 'checkbox';
+  inputHam.id = 'burger';
+  //! logo:
+  imgLogo.src= "/assets/favicon.png";
+  imgLogo.alt="Logo";
+  h1.textContent = 'iZone';
+  imgLogo.classList.add('logo');
+  divLogo.classList.add('logoDiv');
+
+  //Connecting Elements
+  //!logo:
+  divLogo.appendChild(imgLogo);
+  divLogo.appendChild(h1);
+
+
+  //!hamburger:
+  label.appendChild(inputHam);
+  label.appendChild(span1);
+  label.appendChild(span2);
+  label.appendChild(span3);
+
+
+  headerSection.appendChild(divLogo);
+  headerSection.appendChild(label);
+}
+
+printHeader();
+
+
 //? FUNCIÓN CARTAS DE PRODUCTOS -> para que sea más fácil pintarlo en html creamos un bucle que se repite
 const printProducts  = (products) => {
   const productSection = document.querySelector('#products')
@@ -99,6 +149,7 @@ const printProducts  = (products) => {
     const spanElement2 = document.createElement('span');
     const spanElement3 = document.createElement('span');
     const spanElement4 = document.createElement('span');
+
 
     imgProduct.src = product.image
     imgProduct.alt = product.name
