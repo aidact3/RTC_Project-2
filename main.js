@@ -81,57 +81,7 @@ const PRODUCTS = [
   }
 ];
 
-//? FUNCIÓN HEADER 
-const printHeader = () => {
-  const headerSection = document.querySelector('#header')
-
-  //Create elements inside of it:
-  //!hamburger:
-  const label = document.createElement('label');
-  const inputHam = document.createElement('input');
-  const span1 = document.createElement('span');
-  const span2 = document.createElement('span');
-  const span3 = document.createElement('span');
-  //! logo:
-  const divLogo = document.createElement('div');
-  const  imgLogo = document.createElement('img');
-  const h1 = document.createElement( "h1" );
-
-
-  //Adding others:
-  //! hamburger:
-  label.classList.add('burger');
-  label.htmlFor = 'burger';
-  inputHam.type = 'checkbox';
-  inputHam.id = 'burger';
-  //! logo:
-  imgLogo.src= "/assets/favicon.png";
-  imgLogo.alt="Logo";
-  h1.textContent = 'iZone';
-  imgLogo.classList.add('logo');
-  divLogo.classList.add('logoDiv');
-
-  //Connecting Elements
-  //!logo:
-  divLogo.appendChild(imgLogo);
-  divLogo.appendChild(h1);
-
-
-  //!hamburger:
-  label.appendChild(inputHam);
-  label.appendChild(span1);
-  label.appendChild(span2);
-  label.appendChild(span3);
-
-
-  headerSection.appendChild(divLogo);
-  headerSection.appendChild(label);
-}
-
-printHeader();
-
-
-//? FUNCIÓN CARTAS DE PRODUCTOS -> para que sea más fácil pintarlo en html creamos un bucle que se repite
+//! FUNCIÓN CARTAS DE PRODUCTOS -> para que sea más fácil pintarlo en html creamos un bucle que se repite
 const printProducts  = (products) => {
   const productSection = document.querySelector('#products')
 
@@ -184,6 +134,190 @@ const printProducts  = (products) => {
    
   }
 }
+printProducts(PRODUCTS);
 
-//? llamamos a la función para pintar los productos
-printProducts(PRODUCTS); //para conectarla con el array
+//! FUNCIÓN HEADER 
+const printHeader = () => {
+  const headerSection = document.querySelector('#header')
+
+  //Create elements inside of it:
+  //!hamburger:
+  const divBurger = document.createElement('div');
+  const label = document.createElement('label');
+  const inputHam = document.createElement('input');
+  const span1 = document.createElement('span');
+  const span2 = document.createElement('span');
+  const span3 = document.createElement('span');
+  //! logo:
+  const divLogo = document.createElement('div');
+  const  imgLogo = document.createElement('img');
+  const h1 = document.createElement( "h1" );
+
+
+  //Adding others:
+  //! hamburger:
+  label.classList.add('divBurger');
+  label.classList.add('burger');
+  label.htmlFor = 'burger';
+  inputHam.type = 'checkbox';
+  inputHam.id = 'burger';
+  //! logo:
+  imgLogo.src= "/assets/favicon.png";
+  imgLogo.alt="Logo";
+  h1.textContent = 'iZone';
+  imgLogo.classList.add('logo');
+  divLogo.classList.add('logoDiv');
+
+  //Connecting Elements
+  //!logo:
+  divLogo.appendChild(imgLogo);
+  divLogo.appendChild(h1);
+  //!hamburger:
+  label.appendChild(inputHam);
+  label.appendChild(span1);
+  label.appendChild(span2);
+  label.appendChild(span3);
+  divBurger.appendChild(label);
+
+
+  headerSection.appendChild(divLogo);
+  headerSection.appendChild(divBurger);
+}
+printHeader();
+
+//! FUNCIÓN SIDE SECTION
+const printSection = () => {
+  const sectionBurger = document.querySelector('#filter');
+  //! Create elements
+  // Category Filter
+  const categorySelect = document.createElement('select');
+  const preText = document.createElement('option');
+  // Price Range Filter
+  const divPrice = document.createElement('div');
+  const priceTitle = document.createElement('h4');
+  const priceRange = document.createElement('input');
+  const divPriceLabel = document.createElement('div');
+  const spanPrice1 = document.createElement('span');
+  const spanPrice2 = document.createElement('span');
+  // Clear Filters Button
+  const buttonFilter = document.createElement('button');
+  const span = document.createElement('span');
+
+  //! Content of the elements
+  // Category Filter
+  categorySelect.id = 'category-select';
+  preText.textContent = 'Select Category';
+  categorySelect.insertBefore(preText, categorySelect.firstChild); // Insert the pre-text option at the beginning of the select element
+  const categories = Array.from(new Set(PRODUCTS.map(product => product.category))); // Get all unique categories from the products array
+  for (const category of categories) {
+    const option = document.createElement('option');
+    option.value = category;
+    option.textContent = category;
+    categorySelect.appendChild(option);
+  } // Create an option element for each category and add it to the select element
+  // Price Range Filter
+  priceRange.type = 'range';
+  priceRange.min = 0;
+  priceRange.max = 2000;
+  priceRange.value = 0;
+  priceRange.id = 'price-range';
+  divPrice.id = 'div-price-range';
+  divPriceLabel.id = 'price-labels';
+  spanPrice1.id = 'min-price';
+  spanPrice2.id = 'max-price';
+  spanPrice1.textContent = `$${priceRange.min}`;
+  spanPrice2.textContent = `$${priceRange.max}`;
+  priceTitle.textContent = 'Set the maximum price:'
+
+  // Cleal Filters Button
+  span.textContent = 'Clear Filters';
+
+  //Adding Elements into the DOM
+  buttonFilter.appendChild(span);
+  sectionBurger.appendChild(categorySelect);
+  divPrice.appendChild(priceTitle);
+  divPrice.appendChild(priceRange);
+  divPrice.appendChild(divPriceLabel);
+  divPriceLabel.appendChild(spanPrice1);
+  divPriceLabel.appendChild(spanPrice2);
+  sectionBurger.appendChild(divPrice);
+  sectionBurger.appendChild(buttonFilter);
+
+  // Update the labels whenever the user interacts with the range input
+priceRange.addEventListener('input', () => {
+  spanPrice2.textContent = `$${priceRange.value}`;
+});
+
+}
+printSection ();
+
+
+
+
+//! FUNCIÓN FILTER CATEGORY
+// const filterCategory = (category) => {
+//   const productSection = document.querySelector('#products');
+//   productSection.innerHTML = ''; // Clear the existing products
+//   const filteredProductsCategory = PRODUCTS.filter(product => product.category === category);
+//   printProducts(filteredProductsCategory); // Print the filtered products
+// };
+// //?Event Listener of Filter Category
+// categorySelect.addEventListener('change', (event) => {
+//   const selectedCategory = event.target.value;
+//   filterCategory(selectedCategory);
+// });
+
+//! FUNCIÓN FILTER PRICE RANGE
+// const filterPriceRange = (minPrice, maxPrice) => {
+//   const filteredProductsPriceRange = PRODUCTS.filter(product => product.price >= minPrice && product.price <= maxPrice);
+//   const productSection = document.querySelector('#products');
+//   productSection.innerHTML = '';
+//   printProducts(filteredProductsPriceRange);
+// };
+// //? Event Listener of Price Range
+// const priceRangeInput = document.querySelector('#price-range');
+// priceRangeInput.addEventListener('input', (e) => {
+//   const minPrice = e.target.min;
+//   const maxPrice = e.target.max;
+//   const currentValue = e.target.value;
+//   filterPriceRange(currentValue, maxPrice);
+// });
+
+//! FUNCIÓN CLEAR FILTERS
+const clearFilters = () => {
+  categorySelect.selectedIndex = 0; // Clear the category select element
+  priceRange.value = priceRange.min; // Reset the price range input element
+  const productSection = document.querySelector('#products'); // Clear the product section
+  productSection.innerHTML = '';
+  printProducts(PRODUCTS); // Print all products
+};
+//? Event listener to the clear filters button
+buttonFilter.addEventListener('click', clearFilters);
+
+//! FUNCIÓN DE BÚSQUEDA
+const searchProducts = (products, searchTerm) => {
+  // Filter the products based on the search term
+  const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  // Clear the existing product cards
+  const productSection = document.querySelector('#products');
+  productSection.innerHTML = '';
+
+  // Print the filtered products
+  if (filteredProducts.length > 0) {
+    printProducts(filteredProducts);
+  } else {
+    // Print a message saying that nothing was found
+    const message = document.createElement('p');
+    message.textContent = 'Sorry, nothing was found';
+    message.classList.add('no-results');
+    productSection.appendChild(message);
+  }
+}
+//? Add an event listener to the input field
+const inputField = document.querySelector('.input');
+inputField.addEventListener('input', (e) => {
+  const searchTerm = e.target.value;
+  searchProducts(PRODUCTS, searchTerm);
+});
+
